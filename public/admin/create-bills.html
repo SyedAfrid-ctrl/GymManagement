@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Bills</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        button {
+            margin: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Bills</h2>
+    <form onsubmit="event.preventDefault(); generateBill();">
+        <select id="billMember" required></select>
+        <input type="number" placeholder="Amount ($)" id="billAmount" required min="1">
+        <button type="submit">Generate Bill</button>
+    </form>
+
+    <h3>Generated Bills</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Amount ($)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="billTableBody"></tbody>
+    </table>
+
+    <a href="../admin_dashboard.html">Back to Dashboard</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMembers();
+            loadBills();
+        });
+
+        function loadMembers() {
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            let memberSelect = document.getElementById("billMember");
+            memberSelect.innerHTML = "<option value='' disabled selected>Select Member</option>";
+
+            members.forEach(member => {
+                let option = document.createElement("option");
+                option.value = member.name;
+                option.textContent = member.name;
+                memberSelect.appendChild(option);
+            });
+        }
+
+        function generateBill() {
+            let member = document.getElementById("billMember").value;
+            let amount = document.getElementById("billAmount").value.trim();
+
+            if (!member || !amount) return alert("Please select a member and enter an amount.");
+
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+            let newBill = { member, amount };
+            bills.push(newBill);
+            localStorage.setItem("bills", JSON.stringify(bills));
+
+            appendBillToTable(newBill);
+            document.getElementById("billAmount").value = "";
+        }
+
+        function appendBillToTable(bill) {
+            let tableBody = document.getElementById("billTableBody");
+            let row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${bill.member}</td>
+                <td>$${bill.amount}</td>
+                <td>
+                    <button onclick="downloadBill('${bill.member}', '${bill.amount}')">Download</button>
+                    <button onclick="sendBill('${bill.member}', '${bill.amount}')">Send</button>
+                    <button onclick="deleteBill(this, '${bill.member}', '${bill.amount}')">Delete</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function loadBills() {
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+            bills.forEach(bill => appendBillToTable(bill));
+        }
+
+        function downloadBill(member, amount) {
+            const { jsPDF } = window.jspdf;
+            let doc = new jsPDF();
+
+            doc.text(`Bill Receipt`, 90, 20);
+            doc.text(`Member: ${member}`, 20, 40);
+            doc.text(`Amount: $${amount}`, 20, 50);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 60);
+
+            doc.save(`Bill_${member}.pdf`);
+        }
+
+        function sendBill(member, amount) {
+            alert(`Sending bill of $${amount} to ${member} (Feature can be integrated with email API).`);
+        }
+
+        function deleteBill(button, member, amount) {
+            let row = button.closest("tr");
+            row.remove();
+
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+            let updatedBills = bills.filter(bill => bill.member !== member || bill.amount !== amount);
+            localStorage.setItem("bills", JSON.stringify(updatedBills));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bills</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>My Bills</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="billsTable">
+            </tbody>
+        </table>
+
+        <a href="../user_dashboard.html"><button class="btn">Back to Dashboard</button></a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let userName = localStorage.getItem("currentUser");
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+
+            let userBills = bills.filter(bill => bill.name === userName);
+            let table = document.getElementById("billsTable");
+            table.innerHTML = "";
+
+            if (userBills.length === 0) {
+                table.innerHTML = "<tr><td colspan='2'>No bills available</td></tr>";
+            } else {
+                userBills.forEach(bill => {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `<td>${bill.date || "Unknown"}</td><td>₹${bill.amount}</td>`;
+                    table.appendChild(row);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

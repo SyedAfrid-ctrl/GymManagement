@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Fee Package</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            margin: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Assign Fee Package</h2>
+    <form onsubmit="event.preventDefault(); assignPackage();">
+        <select id="memberSelect" required></select>
+        <select id="packageSelect">
+            <option value="1999">Basic - ₹1999</option>
+            <option value="2999">Standard - ₹2999</option>
+            <option value="3999">Premium - ₹3999</option>
+        </select>
+        <button type="submit">Assign</button>
+    </form>
+
+    <h3>Assigned Packages</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Package</th>
+                <th>Amount (₹)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="packageTableBody"></tbody>
+    </table>
+
+    <a href="../admin_dashboard.html">Back to Dashboard</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMembers();
+            loadAssignedPackages();
+        });
+
+        function loadMembers() {
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            let memberSelect = document.getElementById("memberSelect");
+            memberSelect.innerHTML = "<option value='' disabled selected>Select Member</option>";
+
+            members.forEach(member => {
+                let option = document.createElement("option");
+                option.value = member.name;
+                option.textContent = member.name;
+                memberSelect.appendChild(option);
+            });
+        }
+
+        function assignPackage() {
+            let member = document.getElementById("memberSelect").value;
+            let packageAmount = document.getElementById("packageSelect").value;
+            let packageName = document.getElementById("packageSelect").options[document.getElementById("packageSelect").selectedIndex].text;
+
+            if (!member) return alert("Please select a member.");
+
+            let assignedPackages = JSON.parse(localStorage.getItem("assignedPackages")) || [];
+            let packageId = Date.now(); // Unique ID for each package assignment
+
+            assignedPackages.push({ id: packageId, member, packageName, packageAmount });
+            localStorage.setItem("assignedPackages", JSON.stringify(assignedPackages));
+
+            appendPackageToTable({ id: packageId, member, packageName, packageAmount });
+            generateBill(packageId, member, packageAmount);
+        }
+
+        function appendPackageToTable(packageData) {
+            let tableBody = document.getElementById("packageTableBody");
+            let row = document.createElement("tr");
+            row.setAttribute("data-id", packageData.id);
+
+            row.innerHTML = `
+                <td>${packageData.member}</td>
+                <td>${packageData.packageName}</td>
+                <td>₹${packageData.packageAmount}</td>
+                <td>
+                    <button onclick="deletePackage(${packageData.id})">Delete</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function loadAssignedPackages() {
+            let assignedPackages = JSON.parse(localStorage.getItem("assignedPackages")) || [];
+            assignedPackages.forEach(packageData => appendPackageToTable(packageData));
+        }
+
+        function generateBill(id, member, amount) {
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+            bills.push({ id, member, amount });
+            localStorage.setItem("bills", JSON.stringify(bills));
+        }
+
+        function deletePackage(packageId) {
+            let assignedPackages = JSON.parse(localStorage.getItem("assignedPackages")) || [];
+            assignedPackages = assignedPackages.filter(pkg => pkg.id !== packageId);
+            localStorage.setItem("assignedPackages", JSON.stringify(assignedPackages));
+
+            let bills = JSON.parse(localStorage.getItem("bills")) || [];
+            bills = bills.filter(bill => bill.id !== packageId);
+            localStorage.setItem("bills", JSON.stringify(bills));
+
+            document.querySelector(`tr[data-id='${packageId}']`).remove();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Notifications</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: black;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        select,
+        input,
+        button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .notification-container {
+            max-height: 250px;
+            /* Fixed height */
+            overflow-y: auto;
+            /* Enables vertical scrolling */
+            overflow-x: hidden;
+            /* Prevents horizontal scrolling */
+            padding: 10px;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            /* Ensures it doesn't overflow */
+        }
+
+        .notification span {
+            flex: 1;
+            /* Allows the message to take available space */
+            max-width: 80%;
+            /* Prevents it from pushing buttons too far */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 60px;
+            height: 30px;
+            border-radius: 5px;
+            font-size: 14px;
+            flex-shrink: 0;
+            /* Ensures button does not shrink */
+        }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Assign Monthly Notifications</h2>
+
+        <div class="input-container">
+            <select id="memberSelect">
+                <option value="" disabled selected>Select Member</option>
+            </select>
+            <input type="text" id="notificationMessage" placeholder="Notification Message">
+            <button onclick="sendNotification()">Send</button>
+        </div>
+
+        <div class="notification-container" id="notificationList"></div>
+
+        <a href="../admin_dashboard.html" class="back-link">Back to Dashboard</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMembers();
+            loadNotifications();
+        });
+
+        function loadMembers() {
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            let memberSelect = document.getElementById("memberSelect");
+
+            memberSelect.innerHTML = "<option value='' disabled selected>Select Member</option>";
+            members.forEach(member => {
+                let option = document.createElement("option");
+                option.value = member.name;
+                option.textContent = member.name;
+                memberSelect.appendChild(option);
+            });
+        }
+
+        function sendNotification() {
+            let member = document.getElementById("memberSelect").value;
+            let message = document.getElementById("notificationMessage").value.trim();
+
+            if (!member) {
+                alert("Please select a member.");
+                return;
+            }
+            if (message === "") {
+                alert("Please enter a notification message.");
+                return;
+            }
+
+            let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            let notificationId = Date.now();
+            let newNotification = { id: notificationId, member, message };
+
+            notifications.push(newNotification);
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+
+            appendNotification(newNotification);
+            document.getElementById("notificationMessage").value = "";
+        }
+
+        function appendNotification(notification) {
+            let list = document.getElementById("notificationList");
+            let div = document.createElement("div");
+            div.classList.add("notification");
+            div.setAttribute("data-id", notification.id);
+
+            div.innerHTML = `
+                <span><strong>${notification.member}:</strong> ${notification.message}</span>
+                <button class="delete-btn" onclick="deleteNotification(${notification.id})">Delete</button>
+            `;
+
+            list.appendChild(div);
+        }
+
+        function loadNotifications() {
+            let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            notifications.forEach(notification => appendNotification(notification));
+        }
+
+        function deleteNotification(notificationId) {
+            let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            notifications = notifications.filter(notif => notif.id !== notificationId);
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+
+            document.querySelector(`.notification[data-id='${notificationId}']`).remove();
+        }
+    </script>
+
+</body>
+
+</html>

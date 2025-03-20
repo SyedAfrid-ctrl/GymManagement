@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Members</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        button {
+            margin: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Manage Members</h2>
+    <form onsubmit="event.preventDefault(); addMember();">
+        <input type="text" placeholder="Member Name" id="memberName" required>
+        <input type="email" placeholder="Email" id="memberEmail" required>
+        <button type="submit">Add Member</button>
+    </form>
+
+    <h3>Existing Members</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="memberTableBody"></tbody>
+    </table>
+
+    <a href="../admin_dashboard.html">Back to Dashboard</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadMembers);
+
+        function addMember() {
+            let name = document.getElementById("memberName").value.trim();
+            let email = document.getElementById("memberEmail").value.trim();
+            if (!name || !email) return;
+
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+
+            // Prevent duplicate emails
+            if (members.some(member => member.email === email)) {
+                alert("A member with this email already exists!");
+                return;
+            }
+
+            let newMember = { name, email };
+            members.push(newMember);
+            localStorage.setItem("members", JSON.stringify(members));
+
+            appendMemberToTable(newMember);
+            document.getElementById("memberName").value = "";
+            document.getElementById("memberEmail").value = "";
+        }
+
+        function appendMemberToTable(member) {
+            let tableBody = document.getElementById("memberTableBody");
+            let row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${member.name}</td>
+                <td>${member.email}</td>
+                <td>
+                    <button onclick="editMember(this)">Edit</button>
+                    <button onclick="deleteMember(this)">Delete</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function loadMembers() {
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            members.forEach(member => appendMemberToTable(member));
+        }
+
+        function editMember(button) {
+            let row = button.closest("tr");
+            let nameCell = row.cells[0];
+            let emailCell = row.cells[1];
+
+            let newName = prompt("Enter new name:", nameCell.innerText);
+            let newEmail = prompt("Enter new email:", emailCell.innerText);
+            if (!newName || !newEmail) return;
+
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            let memberIndex = members.findIndex(member => member.email === emailCell.innerText);
+            
+            if (memberIndex !== -1) {
+                members[memberIndex] = { name: newName, email: newEmail };
+                localStorage.setItem("members", JSON.stringify(members));
+
+                nameCell.innerText = newName;
+                emailCell.innerText = newEmail;
+            }
+        }
+
+        function deleteMember(button) {
+            let row = button.closest("tr");
+            let email = row.cells[1].innerText;
+
+            let members = JSON.parse(localStorage.getItem("members")) || [];
+            let updatedMembers = members.filter(member => member.email !== email);
+
+            localStorage.setItem("members", JSON.stringify(updatedMembers));
+            row.remove();
+        }
+    </script>
+</body>
+</html>

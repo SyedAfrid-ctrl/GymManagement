@@ -5,28 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assign Fee Package</title>
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        button {
-            margin: 2px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
-<body>
+<body class="admin-body">
     <h2>Assign Fee Package</h2>
     <form onsubmit="event.preventDefault(); assignPackage();">
         <select id="memberSelect" required></select>
@@ -35,7 +15,7 @@
             <option value="2999">Standard - ₹2999</option>
             <option value="3999">Premium - ₹3999</option>
         </select>
-        <button type="submit">Assign</button>
+        <button id="btn2" type="submit">Assign</button>
     </form>
 
     <h3>Assigned Packages</h3>
@@ -51,7 +31,7 @@
         <tbody id="packageTableBody"></tbody>
     </table>
 
-    <a href="../admin_dashboard.html">Back to Dashboard</a>
+    <a id="adma" href="../admin_dashboard.html"><button id="btn2">Back to Dashboard</button></a>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

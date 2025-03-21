@@ -6,7 +6,7 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
+<body class="dashboard-body">
     <div class="dashboard-container">
         <h2>User Dashboard</h2>
         <p>Welcome! Here you can view your membership details and bills.</p>
@@ -14,19 +14,19 @@
         <div class="card">
             <h3>My Membership</h3>
             <p><strong>Package:</strong> <span id="membershipPlan">Loading...</span></p>
-            <a href="./member/my_membership.html"><button class="btn">View Details</button></a>
+            <a href="./member/my_membership.html"><button class="btn1">View Details</button></a>
         </div>
 
         <div class="card">
             <h3>My Bills</h3>
             <p><strong>Last Bill:</strong> <span id="lastBill">Loading...</span></p>
-            <a href="./member/my_bills.html"><button class="btn">View All Bills</button></a>
+            <a href="./member/my_bills.html"><button class="btn1">View All Bills</button></a>
         </div>
 
         <div class="card">
             <h3>My Schedule</h3>
-            <p>Next Class: <span id="nextClass">Yoga</span> on <span id="classDate">20th March at 6 PM</span></p>
-            <a href="./member/my_schedule.html"><button class="btn">View Schedule</button></a>
+            <p><strong>Next Class:</strong><span id="nextClass">Yoga</span> on <span id="classDate">20th March at 6 PM</span></p>
+            <a href="./member/my_schedule.html"><button class="btn1">View Schedule</button></a>
         </div>
 
         <button class="logout-btn" onclick="logout()">Logout</button>

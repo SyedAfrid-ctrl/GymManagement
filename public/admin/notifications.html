@@ -111,22 +111,11 @@
             background-color: #a71d2a;
         }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
 
-        .back-link:hover {
-            color: #0056b3;
-        }
     </style>
 </head>
 
-<body>
+<body class="admin-body">
 
     <div class="container">
         <h2>Assign Monthly Notifications</h2>
@@ -141,7 +130,7 @@
 
         <div class="notification-container" id="notificationList"></div>
 
-        <a href="../admin_dashboard.html" class="back-link">Back to Dashboard</a>
+        <a id="adma" href="../admin_dashboard.html"> <button id="btn2">Back to Dashboard</button></a>
     </div>
 
     <script>

@@ -6,34 +6,13 @@
     <title>Create Bills</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        button {
-            margin: 2px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
-<body>
+<body class="admin-body">
     <h2>Create Bills</h2>
     <form onsubmit="event.preventDefault(); generateBill();">
         <select id="billMember" required></select>
         <input type="number" placeholder="Amount ($)" id="billAmount" required min="1">
-        <button type="submit">Generate Bill</button>
+        <button id="btn2" type="submit">Generate Bill</button>
     </form>
 
     <h3>Generated Bills</h3>
@@ -48,7 +27,7 @@
         <tbody id="billTableBody"></tbody>
     </table>
 
-    <a href="../admin_dashboard.html">Back to Dashboard</a>
+    <a id="adma" href="../admin_dashboard.html"><button id="btn2">Back to Dashboard</button></a>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

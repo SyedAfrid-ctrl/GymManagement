@@ -5,34 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Members</title>
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        button {
-            margin: 2px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
-<body>
+<body class="admin-body">
     <h2>Manage Members</h2>
     <form onsubmit="event.preventDefault(); addMember();">
         <input type="text" placeholder="Member Name" id="memberName" required>
         <input type="email" placeholder="Email" id="memberEmail" required>
-        <button type="submit">Add Member</button>
+        <button id="btn2" type="submit">Add Member</button>
     </form>
 
     <h3>Existing Members</h3>
@@ -47,7 +26,7 @@
         <tbody id="memberTableBody"></tbody>
     </table>
 
-    <a href="../admin_dashboard.html">Back to Dashboard</a>
+    <a id="adma" href="../admin_dashboard.html"><button id="btn2">Back to Dashboard</button></a>
 
     <script>
         document.addEventListener("DOMContentLoaded", loadMembers);

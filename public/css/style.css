@@ -352,30 +352,71 @@ p a:hover {
 }
 
 /* ====== Dashboard & Cards ====== */
+.dashboard-body {
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: url('../images/new.jpg') no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed;
+}
 .dashboard-container {
     max-width: 900px;
+    max-height: 800px;
     margin: 50px auto;
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(1px);
     border-radius: 15px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
+    color: #ff3300;
+}
+
+.dashboard-container p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #000000;
 }
 
 .card {
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    margin: 15px;
+    padding: 10px;
+    margin: 10px;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 6px 15px rgb(255, 0, 0);
+    max-width: 900px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 15px rgba(#ff3300, 0.3);
 }
 
+.card a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.card p{
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+.card #btn1{
+    background: linear-gradient(45deg, #ff6600, #ff3300);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+    size: 20px;
+}
 /* ====== Tables (Bills, Reports, Members, etc.) ====== */
 table {
     width: 100%;
@@ -416,4 +457,60 @@ footer {
 
 .fade-in {
     animation: fadeIn 0.8s ease-in-out;
+}
+
+.admin-body {
+    height: 100vh;
+    background: url('../images/admin.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+#btn2{
+    background: linear-gradient(45deg, #ff6600, #ff3300);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+    size: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+#btn2:hover {
+    background: linear-gradient(45deg, #ff3300, #ff6600);
+    transform: scale(1.1);
+    color: black;
+}
+
+#adma{
+    color: #000000;
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.diet{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    color: #000
+}
+
+.admin-body1{
+    height: 100vh;
+    background: url('../images/diet.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.member-body{
+    height: 100vh;
+    background: url('../images/member.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
 }

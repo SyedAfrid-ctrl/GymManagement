@@ -43,7 +43,7 @@ Backend:<br>
 •	models/ – Defines database schemas.<br><br>
 
 Database:<br>
-•	MongoDB<br<br>>
+•	MongoDB<br><br>
 
 Conclusion<br>
 The Gym Management System is a user-friendly platform that streamlines gym operations with features like authentication, real-time notifications, and billing. Built using the MERN stack, it ensures efficiency, security, and scalability. The system enhances both admin and member experiences through an intuitive dashboard and task tracking. Future improvements could include mobile app support and online payments for a more seamless experience. This project effectively demonstrates full-stack development for modern gym management

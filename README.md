@@ -4,48 +4,48 @@ Developer: Syed Afrid
 ________________________________________
 Introduction
  
-This project is a MERN stack-based Gym Managemant System. The system is developed using JavaScript, Node.js, HTML, CSS, MongoDB, etc.
-Objective
+This project is a MERN stack-based Gym Managemant System. The system is developed using JavaScript, Node.js, HTML, CSS, MongoDB, etc.<br>
+Objective<br>
 The main objective of this project is to provide users with a seamless task management solution enhance gym user experience through an intuitive interface.
 
-Features
-•	authentication and authorization
-•	Real-time notifications
-•	Dashboard with analytics
-•	Task tracking and reminders
-•	Bill generation
+Features<br>
+•	authentication and authorization<br>
+•	Real-time notifications<br>
+•	Dashboard with analytics<br>
+•	Task tracking and reminders<br>
+•	Bill generation<br>
 
-Technology Stack
-•	Frontend:  HTML, CSS, JavaScript.
-•	Backend: Node.js, Express.js.
-•	Database and Authentication: MongoDB.
+Technology Stack<br>
+•	Frontend:  HTML, CSS, JavaScript.<br>
+•	Backend: Node.js, Express.js.<br>
+•	Database and Authentication: MongoDB.<br>
 
-Project Structure
-The project consists of the following key components:
+Project Structure<br>
+The project consists of the following key components:<br><br>
 
-Frontend:
-•	index.html – The main entry point of the application.
-•	Login.html – for login page.
-•	Signup.html – page for signup.
-•	styles.css – Contains all the styling rules.
-•	Script.js – The core JavaScript file handling UI interactions.
-•	Admin/ – contains all the admin dashboard pages.
-•	Member/ – contains all the member dashboard pages.
-•	Images/ – contains images used.
-•	Admin_dashboard – page for admin dashboard.
-•	User_dashboard – page for member dashboard.
+Frontend:<br>
+•	index.html – The main entry point of the application.<br>
+•	Login.html – for login page.<Br>
+•	Signup.html – page for signup.<br>
+•	styles.css – Contains all the styling rules.<br>
+•	Script.js – The core JavaScript file handling UI interactions.<br>
+•	Admin/ – contains all the admin dashboard pages.<br>
+•	Member/ – contains all the member dashboard pages.<br>
+•	Images/ – contains images used.<br>
+•	Admin_dashboard – page for admin dashboard.<br>
+•	User_dashboard – page for member dashboard.<br><br>
 
-Backend:
-•	server.js – The main server file handling requests.
-•	Routes.js – contains routes.
-•	authMiddleware.js – authentication functions.
-•	config – configuration file.
-•	models/ – Defines database schemas.
+Backend:<br>
+•	server.js – The main server file handling requests.<br>
+•	Routes.js – contains routes.<br>
+•	authMiddleware.js – authentication functions.<br>
+•	config – configuration file.<br>
+•	models/ – Defines database schemas.<br><br>
 
-Database:
-•	MongoDB
+Database:<br>
+•	MongoDB<br<br>>
 
-Conclusion
+Conclusion<br>
 The Gym Management System is a user-friendly platform that streamlines gym operations with features like authentication, real-time notifications, and billing. Built using the MERN stack, it ensures efficiency, security, and scalability. The system enhances both admin and member experiences through an intuitive dashboard and task tracking. Future improvements could include mobile app support and online payments for a more seamless experience. This project effectively demonstrates full-stack development for modern gym management
 ________________________________________
 Prepared by: [Syed Afrid]
